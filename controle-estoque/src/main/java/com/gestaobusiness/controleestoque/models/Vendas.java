@@ -13,10 +13,11 @@ import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = ContatoFornecedor.TABLE_NAME)
+@Table(name = Vendas.TABLE_NAME)
 @NoArgsConstructor
 public class Vendas {
 
+    public static final String TABLE_NAME = "Vendas";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
