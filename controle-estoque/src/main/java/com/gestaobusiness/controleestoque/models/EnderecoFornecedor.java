@@ -1,11 +1,18 @@
 package com.gestaobusiness.controleestoque.models;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = EnderecoFornecedor.TABLE_NAME)
+@NoArgsConstructor
 public class EnderecoFornecedor {
+    public static final String TABLE_NAME = "EnderecoFornecedor";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
