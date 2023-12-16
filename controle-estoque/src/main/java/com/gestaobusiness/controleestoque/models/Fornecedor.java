@@ -1,5 +1,7 @@
 package com.gestaobusiness.controleestoque.models;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,14 +9,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = Fornecedores.TABLE_NAME)
+@Table(name = Fornecedor.TABLE_NAME)
 @NoArgsConstructor
-public class Fornecedores {
+public class Fornecedor {
 
     public static final String TABLE_NAME = "Fornecedores";
 
@@ -37,5 +40,8 @@ public class Fornecedores {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_contato_id")
     private ContatoFornecedor contatoFornecedor;
+
+    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
+    private List<Compra> compras;
 
 }
