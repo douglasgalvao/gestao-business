@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 @Service
 public class MailSenderService {
+    
     @Autowired
     private JavaMailSender mailSender;
 
