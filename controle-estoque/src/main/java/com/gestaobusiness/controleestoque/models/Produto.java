@@ -7,24 +7,26 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = Produto.TABLE_NAME)
 @NoArgsConstructor
+@Getter
 public class Produto {
 
     public static final String TABLE_NAME = "Produto";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "produto_id", unique = true)
     private Long id;
 
-    @Column(name = "nome", nullable = false, unique = true)
+    @Column(name = "produto_nome", unique = true)
     private String nome;
 
     @ManyToOne
-    private CategoriaProduto categoriaProduto;
+    private Categoria categoriaProduto;
 
 }

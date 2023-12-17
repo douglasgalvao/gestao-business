@@ -6,11 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = EnderecoFornecedor.TABLE_NAME)
 @NoArgsConstructor
+@Getter
 public class EnderecoFornecedor {
     public static final String TABLE_NAME = "EnderecoFornecedor";
     @Id

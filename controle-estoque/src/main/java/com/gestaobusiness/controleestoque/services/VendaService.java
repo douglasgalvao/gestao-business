@@ -16,16 +16,16 @@ public class VendaService {
     @Autowired
     VendaRepository vendaRepository;
 
-    public List<Venda> getVendas() {
+    public List<Venda> obterVendas() {
         return vendaRepository.findAll();
     }
 
-    public Venda getVenda(Long idVenda) {
+    public Venda obterVenda(Long idVenda) {
         return vendaRepository.findById(idVenda)
                 .orElseThrow(() -> new NoSuchElementException("Venda não encontrada com o ID: " + idVenda));
     }
 
-    public HttpStatus postVenda(Venda venda) {
+    public HttpStatus salvarVenda(Venda venda) {
         vendaRepository.save(venda);
         return HttpStatus.CREATED;
     }

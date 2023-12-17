@@ -1,30 +1,28 @@
 package com.gestaobusiness.controleestoque.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = CategoriaProduto.TABLE_NAME)
+@Table(name = Categoria.TABLE_NAME)
 @NoArgsConstructor
-public class CategoriaProduto {
+@Getter
+public class Categoria {
 
-    public static final String TABLE_NAME = "CategoriaProduto";
+    public static final String TABLE_NAME = "Categoria";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "categoria_id", unique = true)
     private Long id;
 
-    @Column(name = "nome", nullable = false, length = 50)
-    // @Size(min = 2, max = 50)
+    @Column(name = "categoria_nome", length = 50)
     private String nome;
 
 }

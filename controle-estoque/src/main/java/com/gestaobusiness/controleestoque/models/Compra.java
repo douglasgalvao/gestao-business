@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = Compra.TABLE_NAME)
 @NoArgsConstructor
+@Getter
 public class Compra {
 
     public static final String TABLE_NAME = "Compras";

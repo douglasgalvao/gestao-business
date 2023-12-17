@@ -1,10 +1,26 @@
 package com.gestaobusiness.controleestoque.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.gestaobusiness.controleestoque.models.Produto;
+import com.gestaobusiness.controleestoque.services.ProdutoService;
 
 @Controller
-@RequestMapping(value="/produto")
+@RequestMapping(value = "/produto")
 public class ProdutoController {
 
+    @Autowired
+    private ProdutoService produtoService;
+
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<HttpStatus> salvarProduto(@RequestBody Produto produto) {
+        return ResponseEntity.status(201).body(produtoService.salvarProduto(produto));
+    };
 }

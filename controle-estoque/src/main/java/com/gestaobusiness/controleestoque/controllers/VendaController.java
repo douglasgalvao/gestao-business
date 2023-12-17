@@ -23,18 +23,18 @@ public class VendaController {
     VendaService vendaService;
 
     @GetMapping
-    public ResponseEntity<List<Venda>> getVendas() {
-        return ResponseEntity.ok().body(vendaService.getVendas());
+    public ResponseEntity<List<Venda>> obterVendas() {
+        return ResponseEntity.ok().body(vendaService.obterVendas());
     };
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getVenda(@PathVariable Long id) {
-        return ResponseEntity.ok().body(vendaService.getVenda(id));
+    public ResponseEntity<?> obterVenda(@PathVariable Long id) {
+        return ResponseEntity.ok().body(vendaService.obterVenda(id));
     };
 
     @PostMapping
-    public ResponseEntity<HttpStatus> postVenda(@RequestBody Venda venda) {
-        return ResponseEntity.status(201).body(vendaService.postVenda(venda));
+    public ResponseEntity<HttpStatus> salvarVenda(@RequestBody Venda venda) {
+        return ResponseEntity.status(201).body(vendaService.salvarVenda(venda));
     };
 
 }

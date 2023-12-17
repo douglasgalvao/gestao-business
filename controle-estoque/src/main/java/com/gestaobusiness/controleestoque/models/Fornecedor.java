@@ -12,11 +12,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = Fornecedor.TABLE_NAME)
 @NoArgsConstructor
+@Getter
 public class Fornecedor {
 
     public static final String TABLE_NAME = "Fornecedores";
