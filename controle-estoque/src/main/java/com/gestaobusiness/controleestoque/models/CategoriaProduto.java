@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
@@ -27,8 +26,5 @@ public class CategoriaProduto {
     @Column(name = "nome", nullable = false, length = 50)
     // @Size(min = 2, max = 50)
     private String nome;
-
-    @OneToMany(mappedBy = "categoriaProduto")
-    private List<Produto> produtos = new ArrayList<>();
 
 }
