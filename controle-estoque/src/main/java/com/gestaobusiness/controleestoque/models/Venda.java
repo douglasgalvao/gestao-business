@@ -1,10 +1,15 @@
 package com.gestaobusiness.controleestoque.models;
 
 import jakarta.persistence.*;
-import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = Venda.TABLE_NAME)
+@Getter
+@Setter
+@NoArgsConstructor
 public class Venda {
 
     public static final String TABLE_NAME = "Vendas";
@@ -16,8 +21,5 @@ public class Venda {
 
     @ManyToOne
     private Cliente cliente;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Produto> produtos;
 
 }

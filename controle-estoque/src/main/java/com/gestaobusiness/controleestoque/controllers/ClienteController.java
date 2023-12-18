@@ -13,30 +13,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gestaobusiness.controleestoque.models.Categoria;
-import com.gestaobusiness.controleestoque.models.Produto;
-import com.gestaobusiness.controleestoque.services.ProdutoService;
+import com.gestaobusiness.controleestoque.models.Cliente;
+import com.gestaobusiness.controleestoque.services.ClienteService;
 
 @Controller
-@RequestMapping(value = "/produto")
-public class ProdutoController {
+@RequestMapping(value = "/cliente")
+public class ClienteController {
 
     @Autowired
-    private ProdutoService produtoService;
+    ClienteService clienteService;
 
     @GetMapping
-    public ResponseEntity<List<Produto>> getProdutos() {
-        return ResponseEntity.ok().body(produtoService.obterProdutos());
+    public ResponseEntity<List<Cliente>> getCategorias() {
+        return ResponseEntity.ok().body(clienteService.obterClientes());
     };
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> obterProduto(@PathVariable Long id) {
-        return ResponseEntity.ok().body(produtoService.obterProduto(id));
+    public ResponseEntity<?> obterCategoria(@PathVariable Long id) {
+        return ResponseEntity.ok().body(clienteService.obterCliente(id));
     };
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<HttpStatus> salvarProduto(@RequestBody Produto produto) {
-        return ResponseEntity.status(201).body(produtoService.salvarProduto(produto));
+    public ResponseEntity<HttpStatus> salvarCliente(@RequestBody Cliente cliente) {
+        return ResponseEntity.status(201).body(clienteService.salvarCliente(cliente));
     };
+
 }

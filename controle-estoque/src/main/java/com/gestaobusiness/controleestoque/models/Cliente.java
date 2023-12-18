@@ -25,10 +25,10 @@ public class Cliente {
     // @Size(min = 2, max = 50)
     private String nome;
 
-    @Column(name = "senha", nullable = false, length = 45)
-    // @Size(min = 8, max = 100)
-    private String senha;
+    @Column(name = "numero", nullable = true, length = 50)
+    // @Size(min = 2, max = 50)
+    private String numero;
 
-    @Column(name = "email", unique = true, nullable = false, length = 50)
+    @Column(name = "email", unique = true, nullable = true, length = 50)
     private String email;
 }
