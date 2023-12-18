@@ -60,8 +60,6 @@ public class VendaService {
             vendaProduto = new VendaProduto();
             vendaProduto.setProduto(produto);
             vendaProduto.setVenda(newVenda);
-            System.out.println(vendaProduto.getProduto().getId() + " " +
-                    vendaProduto.getVenda().getId());
             vendaProdutoRepository.save(vendaProduto);
         }
 
