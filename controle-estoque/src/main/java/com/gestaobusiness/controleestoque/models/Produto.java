@@ -28,6 +28,9 @@ public class Produto {
     @Column(name = "produto_nome")
     private String nome;
 
+    @Column(name = "produto_preco")
+    private Double preco;
+
     @ManyToOne
     private Categoria categoriaProduto;
 

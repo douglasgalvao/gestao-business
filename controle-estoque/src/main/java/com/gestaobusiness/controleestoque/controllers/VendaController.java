@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gestaobusiness.controleestoque.dtos.VendaDTO;
-import com.gestaobusiness.controleestoque.dtos.VendaProdutoInfoDTO;
 import com.gestaobusiness.controleestoque.models.Venda;
 import com.gestaobusiness.controleestoque.services.VendaService;
 
