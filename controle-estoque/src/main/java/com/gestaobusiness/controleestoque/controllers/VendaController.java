@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gestaobusiness.controleestoque.dtos.VendaDTO;
 import com.gestaobusiness.controleestoque.models.Venda;
+import com.gestaobusiness.controleestoque.models.VendaProdutoInfo;
 import com.gestaobusiness.controleestoque.services.VendaService;
 
 @Controller
@@ -25,7 +26,7 @@ public class VendaController {
     VendaService vendaService;
 
     @GetMapping
-    public ResponseEntity<List<Venda>> obterVendas() {
+    public ResponseEntity<List<VendaProdutoInfo>> obterVendas() {
         return ResponseEntity.ok().body(vendaService.obterVendas());
     };
 
