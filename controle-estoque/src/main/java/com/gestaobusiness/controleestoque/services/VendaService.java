@@ -1,8 +1,10 @@
 package com.gestaobusiness.controleestoque.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,10 @@ import com.gestaobusiness.controleestoque.models.Cliente;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.models.Venda;
 import com.gestaobusiness.controleestoque.models.VendaProduto;
+import com.gestaobusiness.controleestoque.models.VendaProdutoInfo;
 import com.gestaobusiness.controleestoque.repository.ClienteRepository;
 import com.gestaobusiness.controleestoque.repository.VendaProdutoRepository;
 import com.gestaobusiness.controleestoque.repository.VendaRepository;
-
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -28,8 +30,13 @@ public class VendaService {
     @Autowired
     ClienteRepository clienteRepository;
 
-    public List<Venda> obterVendas() {
-        return vendaRepository.findAll();
+    public List<VendaProdutoInfo> obterVendas() {
+        List<Tuple> tuples = vendaProdutoRepository.findAllVendaProdutosTuples();
+        List<VendaProdutoInfo> vendasProdutoInfo = new ArrayList<>();
+        for (Tuple tuple : tuples) {
+            vendasProdutoInfo.add(new VendaProdutoInfo(tuple));
+        }
+        return vendasProdutoInfo;
     }
 
     public Venda obterVenda(Long idVenda) {
