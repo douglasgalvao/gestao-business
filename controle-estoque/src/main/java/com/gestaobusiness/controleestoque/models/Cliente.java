@@ -8,11 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = Cliente.TABLE_NAME)
 @NoArgsConstructor
 @Getter
+@Setter
 public class Cliente {
 
     public static final String TABLE_NAME = "Cliente";

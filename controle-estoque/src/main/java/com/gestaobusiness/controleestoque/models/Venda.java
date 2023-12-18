@@ -1,5 +1,7 @@
 package com.gestaobusiness.controleestoque.models;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,8 @@ public class Venda {
 
     @ManyToOne
     private Cliente cliente;
+
+    @ManyToMany
+    private List<Produto> produtos;
 
 }
