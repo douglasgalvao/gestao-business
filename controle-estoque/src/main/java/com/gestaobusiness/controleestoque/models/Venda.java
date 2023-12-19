@@ -36,10 +36,10 @@ public class Venda {
 
     private EMetodoPagamento metodoPagamento;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Cliente cliente;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Produto> produtos;
     
 

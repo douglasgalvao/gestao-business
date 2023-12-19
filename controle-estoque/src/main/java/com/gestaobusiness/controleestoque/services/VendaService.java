@@ -24,6 +24,7 @@ import com.gestaobusiness.controleestoque.repository.ItemVendaRepository;
 import com.gestaobusiness.controleestoque.repository.ProdutoRepository;
 import com.gestaobusiness.controleestoque.repository.VendaRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class VendaService {
@@ -113,6 +114,14 @@ public class VendaService {
         venda.setTotalVenda(totalVenda);
         venda.setProdutos(produtos);
         return venda;
+    }
+
+    @Transactional
+    public HttpStatus deletarVenda(Long idVenda) {
+        itemVendaRepository.atualizarReferenciaProdutoByVenda(idVenda);
+        vendaRepository.deleteById(idVenda);
+
+        return HttpStatus.OK;
     }
 
 }
