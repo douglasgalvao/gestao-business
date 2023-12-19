@@ -105,7 +105,7 @@ public class VendaService {
             venda.setCliente(itemVenda.getVenda().getCliente());
             venda.setStatusVenda(itemVenda.getVenda().getStatusVenda());
             venda.setMetodoPagamento(itemVenda.getVenda().getMetodoPagamento());
-            totalVenda += itemVenda.getVenda().getTotalVenda();
+            totalVenda += itemVenda.getSubtotal();
             ProdutoDTO produtoDTO = ProdutoMapper.toDTO(itemVenda.getProduto(), itemVenda.getQuantidade());
             produtos.add(produtoDTO);
         }
