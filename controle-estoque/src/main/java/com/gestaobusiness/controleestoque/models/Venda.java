@@ -1,8 +1,10 @@
 package com.gestaobusiness.controleestoque.models;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestaobusiness.controleestoque.enums.EMetodoPagamento;
 import com.gestaobusiness.controleestoque.enums.EStatusVenda;
 
@@ -27,6 +29,7 @@ public class Venda {
 
     private Double totalVenda;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataVenda;
 
     private EStatusVenda statusVenda;
@@ -38,5 +41,16 @@ public class Venda {
 
     @ManyToMany
     private List<Produto> produtos;
+    
 
+    public Double getTotalVenda() {
+        if (this.totalVenda == null) {
+            return null;
+        }
+
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String formattedTotal = df.format(totalVenda);
+        this.totalVenda = Double.parseDouble(formattedTotal.replace(",", "."));
+        return this.totalVenda;
+    }
 }
