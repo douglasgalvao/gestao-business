@@ -1,5 +1,6 @@
 package com.gestaobusiness.controleestoque.dtos;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.gestaobusiness.controleestoque.enums.EMetodoPagamento;
@@ -25,5 +26,16 @@ public class VendaDTO {
     private EMetodoPagamento metodoPagamento;
 
     private List<ProdutoDTO> produtos;
+
+    public Double getTotalVenda() {
+        if (this.totalVenda == null) {
+            return null;
+        }
+
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String formattedTotal = df.format(totalVenda);
+        this.totalVenda = Double.parseDouble(formattedTotal.replace(",", "."));
+        return this.totalVenda;
+    }
 
 }
