@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.gestaobusiness.controleestoque.enums.EMetodoPagamento;
 import com.gestaobusiness.controleestoque.enums.EStatusVenda;
+import com.gestaobusiness.controleestoque.models.Categoria;
 import com.gestaobusiness.controleestoque.models.Cliente;
-import com.gestaobusiness.controleestoque.models.Produto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +18,12 @@ public class VendaDTO {
 
     private Cliente cliente;
 
+    private Double totalVenda;
+
     private EStatusVenda statusVenda;
 
     private EMetodoPagamento metodoPagamento;
 
-    private List<Produto> produtos;
+    private List<ProdutoDTO> produtos;
 
 }
