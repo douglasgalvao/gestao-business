@@ -37,7 +37,7 @@ public class VendaController {
     };
 
     @PostMapping
-    public ResponseEntity<HttpStatus> salvarVenda(@Validated @RequestBody VendaDTO venda) {
+    public ResponseEntity<HttpStatus> salvarVenda(@RequestBody VendaDTO venda) {
         return ResponseEntity.status(201).body(vendaService.salvarVenda(venda));
     };
 
