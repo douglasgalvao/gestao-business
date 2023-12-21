@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ import com.gestaobusiness.controleestoque.mapper.ProdutoMapper;
 import com.gestaobusiness.controleestoque.models.Cliente;
 import com.gestaobusiness.controleestoque.models.ItemVenda;
 import com.gestaobusiness.controleestoque.models.Produto;
-import com.gestaobusiness.controleestoque.models.ProdutoQuantidade;
 import com.gestaobusiness.controleestoque.models.Venda;
 import com.gestaobusiness.controleestoque.repository.ClienteRepository;
 import com.gestaobusiness.controleestoque.repository.ItemVendaRepository;
@@ -39,7 +39,7 @@ public class VendaService {
     ClienteRepository clienteRepository;
 
     public List<Venda> obterVendas() {
-        return vendaRepository.findAll();
+        return vendaRepository.findAll(Sort.by(Sort.Order.asc("id")));
     }
 
     public List<ItemVenda> obterVendas(Long idVenda) {
@@ -52,9 +52,12 @@ public class VendaService {
     }
 
     public HttpStatus salvarVenda(VendaDTO venda) {
-        Cliente cliente = clienteRepository.findById(venda.getCliente().getId())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Cliente não encontrado com o ID: " + venda.getCliente().getId()));
+        Cliente cliente;
+        if (venda.getCliente() != null) {
+            cliente = clienteRepository.findById(venda.getCliente().getId()).get();
+        } else {
+            cliente = null;
+        }
         double totalVenda = 0.0;
         Venda newVenda = new Venda();
         List<ProdutoDTO> produtoDTOs = new ArrayList<>();
