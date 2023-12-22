@@ -25,9 +25,23 @@ public class CategoriaService {
                 .orElseThrow(() -> new NoSuchElementException("Categoria não encontrada com o ID: " + idCategoria));
     }
 
+    public Categoria obterCategoria(String nomeCategoria) {
+        return categoriaRepository.findByNome(nomeCategoria);
+    }
+
     public HttpStatus salvarCategoria(Categoria categoria) {
         categoriaRepository.save(categoria);
         return HttpStatus.CREATED;
+    }
+
+    public HttpStatus atualizarCategoria(Categoria categoria) {
+        categoriaRepository.save(categoria);
+        return HttpStatus.OK;
+    }
+
+    public HttpStatus deletarCategoria(Long idCategoria) {
+        categoriaRepository.deleteById(idCategoria);
+        return HttpStatus.OK;
     }
 
 }

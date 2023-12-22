@@ -23,7 +23,6 @@ import com.gestaobusiness.controleestoque.repository.ClienteRepository;
 import com.gestaobusiness.controleestoque.repository.ItemVendaRepository;
 import com.gestaobusiness.controleestoque.repository.ProdutoRepository;
 import com.gestaobusiness.controleestoque.repository.VendaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service

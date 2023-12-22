@@ -33,6 +33,11 @@ public class CategoriaController {
         return ResponseEntity.ok().body(categoriaService.obterCategoria(id));
     };
 
+    @GetMapping(value = "/nome/{nome}")
+    public ResponseEntity<?> obterCategoria(@PathVariable String nome) {
+        return ResponseEntity.ok().body(categoriaService.obterCategoria(nome));
+    };
+
     @PostMapping
     @ResponseBody
     public ResponseEntity<HttpStatus> salvarCategoria(@RequestBody Categoria categoria) {

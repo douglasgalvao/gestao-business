@@ -33,4 +33,5 @@ public class Cliente {
 
     @Column(name = "email", unique = true, nullable = true, length = 50)
     private String email;
+
 }
