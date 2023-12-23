@@ -1,5 +1,6 @@
 package com.gestaobusiness.controleestoque.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class Produto {
     @Column(name = "produto_preco")
     private Double preco;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Categoria categoriaProduto;
 
 }

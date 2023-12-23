@@ -10,11 +10,17 @@ import org.springframework.stereotype.Service;
 import com.gestaobusiness.controleestoque.models.Categoria;
 import com.gestaobusiness.controleestoque.repository.CategoriaRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoriaService {
 
     @Autowired
     CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     public List<Categoria> obterCategorias() {
         return categoriaRepository.findAll();
@@ -29,7 +35,9 @@ public class CategoriaService {
         return categoriaRepository.findByNome(nomeCategoria);
     }
 
+    @Transactional
     public HttpStatus salvarCategoria(Categoria categoria) {
+        categoria = entityManager.merge(categoria);
         categoriaRepository.save(categoria);
         return HttpStatus.CREATED;
     }

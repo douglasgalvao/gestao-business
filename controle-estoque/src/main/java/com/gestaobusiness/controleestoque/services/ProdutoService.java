@@ -39,6 +39,10 @@ public class ProdutoService {
                 .orElseThrow(() -> new NoSuchElementException("Produto não encontrado com o ID: " + idProduto));
     }
 
+    public Produto obterProdutoByNome(String nomeProduto) {
+        return produtoRepository.findByNome(nomeProduto);
+    }
+
     public HttpStatus salvarProduto(Produto categoria) {
         produtoRepository.save(categoria);
         return HttpStatus.CREATED;

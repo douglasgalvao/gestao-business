@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +34,20 @@ public class ProdutoController {
         return ResponseEntity.ok().body(produtoService.obterProduto(id));
     };
 
+    @GetMapping(value = "/nome/{nome}")
+    public ResponseEntity<?> obterProdutoByNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(produtoService.obterProdutoByNome(nome));
+    };
+
     @PostMapping
     @ResponseBody
     public ResponseEntity<HttpStatus> salvarProduto(@RequestBody Produto produto) {
         return ResponseEntity.status(201).body(produtoService.salvarProduto(produto));
+    };
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<HttpStatus> deletarProduto(@PathVariable Long id) {
+        produtoService.deletarProduto(id);
+        return ResponseEntity.ok().build();
     };
 }
