@@ -13,6 +13,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EstoqueDTO {
     private Produto produto;
-    private Integer quantidadeMinima;
-    private Integer quantidadeDisponivel;
+    private Integer quantidade;
 }

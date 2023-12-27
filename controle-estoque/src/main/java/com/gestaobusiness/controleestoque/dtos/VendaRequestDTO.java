@@ -1,4 +1,4 @@
-package com.gestaobusiness.controleestoque.models;
+package com.gestaobusiness.controleestoque.dtos;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -7,25 +7,16 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestaobusiness.controleestoque.enums.EMetodoPagamento;
 import com.gestaobusiness.controleestoque.enums.EStatusVenda;
+import com.gestaobusiness.controleestoque.models.Cliente;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = Venda.TABLE_NAME)
 @Getter
 @Setter
-@NoArgsConstructor
-public class Venda {
+public class VendaRequestDTO {
 
-    public static final String TABLE_NAME = "Vendas";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "venda_id", unique = true)
-    private Long id;
+    private Cliente cliente;
 
     private Double totalVenda;
 
@@ -36,12 +27,7 @@ public class Venda {
 
     private EMetodoPagamento metodoPagamento;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Cliente cliente;
-
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Produto> produtos;
-    
+    private List<CodigoBarrasProdutoRequestDTO> produtos;
 
     public Double getTotalVenda() {
         if (this.totalVenda == null) {
@@ -53,4 +39,5 @@ public class Venda {
         this.totalVenda = Double.parseDouble(formattedTotal.replace(",", "."));
         return this.totalVenda;
     }
+
 }

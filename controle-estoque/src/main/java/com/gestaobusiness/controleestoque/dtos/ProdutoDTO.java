@@ -13,6 +13,8 @@ public class ProdutoDTO {
 
     private Long id;
 
+    private String codBarras;
+
     private String nome;
 
     private Double preco;

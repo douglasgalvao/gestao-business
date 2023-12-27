@@ -24,14 +24,15 @@ public class Cliente {
     private Long id;
 
     @Column(name = "nome", nullable = false, length = 50)
-    // @Size(min = 2, max = 50)
     private String nome;
 
     @Column(name = "numero", nullable = true, length = 50)
-    // @Size(min = 2, max = 50)
     private String numero;
 
     @Column(name = "email", unique = true, nullable = true, length = 50)
     private String email;
+
+    // @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    // private List<Comanda> comandas;
 
 }

@@ -1,9 +1,5 @@
 package com.gestaobusiness.controleestoque.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gestaobusiness.controleestoque.dtos.ProdutoDTO;
-import com.gestaobusiness.controleestoque.dtos.VendaDTO;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +23,7 @@ public class ItemVenda {
     public static final String TABLE_NAME = "ItemVenda";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

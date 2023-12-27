@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.gestaobusiness.controleestoque.models.ItemVenda;
 
-public interface ItemVendaRepository extends JpaRepository<ItemVenda, Long> {
+public interface ItemVendaRepository extends JpaRepository<ItemVenda, String> {
     List<ItemVenda> findAllByVendaId(Long idVenda);
 
     List<ItemVenda> deleteAllByVendaId(Long idVenda);

@@ -15,16 +15,13 @@ public class Estoque {
     public static final String TABLE_NAME = "Estoque";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
+    @Column(name = "estoque_id", unique = true)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "produto_id", referencedColumnName = "id")
     private Produto produto;
 
-    private Integer quantidadeMinima;
-
-    private Integer quantidadeDisponivel;
+    private Integer quantidade;
 
 }

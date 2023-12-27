@@ -1,7 +1,8 @@
 package com.gestaobusiness.controleestoque.enums;
 
 public enum EMetodoPagamento {
-    A_VISTA("avista"),
+    DINHEIRO("dinheiro"),
+    PIX("pix"),
     CARTAO_CREDITO("cartao_credito"),
     CARTAO_DEBITO("cartao_debito");
 

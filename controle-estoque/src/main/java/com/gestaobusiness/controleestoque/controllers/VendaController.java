@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gestaobusiness.controleestoque.dtos.VendaDTO;
+import com.gestaobusiness.controleestoque.dtos.VendaRequestDTO;
 import com.gestaobusiness.controleestoque.models.Venda;
+import com.gestaobusiness.controleestoque.services.EstoqueService;
 import com.gestaobusiness.controleestoque.services.VendaService;
+import com.gestaobusiness.controleestoque.services.exceptions.EstoqueInsuficienteException;
 
 @Controller
 @RequestMapping(value = "/venda")
@@ -35,13 +38,13 @@ public class VendaController {
     };
 
     @PostMapping
-    public ResponseEntity<HttpStatus> salvarVenda(@RequestBody VendaDTO venda) {
-        return ResponseEntity.status(201).body(vendaService.salvarVenda(venda));
-    };
+    public ResponseEntity<?> salvarVenda(@RequestBody VendaRequestDTO venda) {
+        return ResponseEntity.ok().body(vendaService.salvarVenda(venda));
+    }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deletarVenda(@PathVariable Long id) {
         return ResponseEntity.ok().body(vendaService.deletarVenda(id));
-    };  
+    };
 
 }

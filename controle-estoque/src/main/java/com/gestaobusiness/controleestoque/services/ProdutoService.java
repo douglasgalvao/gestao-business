@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.gestaobusiness.controleestoque.models.Categoria;
+import com.gestaobusiness.controleestoque.models.Estoque;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.repository.CategoriaRepository;
 import com.gestaobusiness.controleestoque.repository.EstoqueRepository;
@@ -20,6 +21,8 @@ public class ProdutoService {
     ProdutoRepository produtoRepository;
     @Autowired
     CategoriaRepository categoriaRepository;
+    @Autowired
+    EstoqueRepository estoqueRepository;
 
     public HttpStatus criarCategoria(Categoria categoria) {
         categoriaRepository.save(categoria);
@@ -43,13 +46,18 @@ public class ProdutoService {
         return produtoRepository.findByNome(nomeProduto);
     }
 
-    public HttpStatus salvarProduto(Produto categoria) {
-        produtoRepository.save(categoria);
+    public HttpStatus salvarProduto(Produto produto) {
+        Produto produtoSaved = produtoRepository.save(produto);
+        Estoque estoque = new Estoque();
+        estoque.setId(produtoSaved.getId());
+        estoque.setProduto(produtoSaved);
+        estoque.setQuantidade(0);
+        estoqueRepository.save(estoque);
         return HttpStatus.CREATED;
     }
 
-    public HttpStatus atualizarProduto(Produto categoria) {
-        produtoRepository.save(categoria);
+    public HttpStatus atualizarProduto(Produto produto) {
+        produtoRepository.save(produto);
         return HttpStatus.OK;
     }
 
