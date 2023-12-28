@@ -1,5 +1,7 @@
 package com.gestaobusiness.controleestoque.models;
 
+import java.text.DecimalFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,5 +41,12 @@ public class ItemVenda {
 
     @Column(name = "subtotal")
     private double subtotal;
+
+    public double getSubTotal() {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String formattedTotal = df.format(subtotal);
+        this.subtotal = Double.parseDouble(formattedTotal.replace(",", "."));
+        return this.subtotal;
+    }
 
 }

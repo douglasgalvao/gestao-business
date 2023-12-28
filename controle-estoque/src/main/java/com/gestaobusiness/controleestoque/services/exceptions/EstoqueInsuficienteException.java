@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EstoqueInsuficienteException extends Exception {
+public class EstoqueInsuficienteException extends RuntimeException {
 
     private String produto;
     private int quantidadeEmEstoque;

@@ -6,4 +6,5 @@ import com.gestaobusiness.controleestoque.models.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     public Produto findByNome(String nomeProduto);
+    public Produto findByCodBarras(String codBarras);
 }

@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
 import com.gestaobusiness.controleestoque.models.Categoria;
-import com.gestaobusiness.controleestoque.models.Estoque;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.repository.CategoriaRepository;
-import com.gestaobusiness.controleestoque.repository.EstoqueRepository;
 import com.gestaobusiness.controleestoque.repository.ProdutoRepository;
 
 @Service
@@ -21,8 +20,6 @@ public class ProdutoService {
     ProdutoRepository produtoRepository;
     @Autowired
     CategoriaRepository categoriaRepository;
-    @Autowired
-    EstoqueRepository estoqueRepository;
 
     public HttpStatus criarCategoria(Categoria categoria) {
         categoriaRepository.save(categoria);
@@ -46,17 +43,29 @@ public class ProdutoService {
         return produtoRepository.findByNome(nomeProduto);
     }
 
+    public Produto obterProdutoByCodBarras(String codBarras) {
+        return produtoRepository.findByCodBarras(codBarras);
+    }
+
     public HttpStatus salvarProduto(Produto produto) {
-        Produto produtoSaved = produtoRepository.save(produto);
-        Estoque estoque = new Estoque();
-        estoque.setId(produtoSaved.getId());
-        estoque.setProduto(produtoSaved);
-        estoque.setQuantidade(0);
-        estoqueRepository.save(estoque);
+        produto.setQuantidadeEstoque(0);
+        produtoRepository.save(produto);
         return HttpStatus.CREATED;
     }
 
-    public HttpStatus atualizarProduto(Produto produto) {
+    public HttpStatus adicionarEstoque(AdicionarEstoqueProduto item) {
+        Produto produto = produtoRepository.findByCodBarras(item.getCodBarras());
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + item.getQuantidade());
+        produtoRepository.save(produto);
+        return HttpStatus.OK;
+    }
+
+    public HttpStatus diminuirEstoque(AdicionarEstoqueProduto item) {
+        if (item.getQuantidade() <= 0) {
+            throw new RuntimeException("Quantidade não pode ser adicionada");
+        }
+        Produto produto = produtoRepository.findByCodBarras(item.getCodBarras());
+        produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - item.getQuantidade());
         produtoRepository.save(produto);
         return HttpStatus.OK;
     }

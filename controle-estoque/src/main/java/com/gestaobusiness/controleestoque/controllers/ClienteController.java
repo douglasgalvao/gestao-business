@@ -29,7 +29,7 @@ public class ClienteController {
     };
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> obterCategoria(@PathVariable Long id) {
+    public ResponseEntity<?> obterCliente(@PathVariable Long id) {
         return ResponseEntity.ok().body(clienteService.obterCliente(id));
     };
 

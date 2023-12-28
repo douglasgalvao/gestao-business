@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.services.ProdutoService;
 
@@ -37,6 +38,17 @@ public class ProdutoController {
     @GetMapping(value = "/nome/{nome}")
     public ResponseEntity<?> obterProdutoByNome(@PathVariable String nome) {
         return ResponseEntity.ok().body(produtoService.obterProdutoByNome(nome));
+    };
+
+
+    @GetMapping(value = "/cod/{codBarras}")
+    public ResponseEntity<?> obterProdutoByCodBarras(@PathVariable String codBarras) {
+        return ResponseEntity.ok().body(produtoService.obterProdutoByCodBarras(codBarras));
+    };
+
+    @PostMapping(value = "/adicionarEstoque")
+    public ResponseEntity<HttpStatus> adicionarEstoque(@RequestBody AdicionarEstoqueProduto codBarrasEQuantidade) {
+        return ResponseEntity.status(201).body(produtoService.adicionarEstoque(codBarrasEQuantidade));
     };
 
     @PostMapping

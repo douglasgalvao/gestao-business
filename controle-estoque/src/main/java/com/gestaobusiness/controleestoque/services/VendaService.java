@@ -3,25 +3,22 @@ package com.gestaobusiness.controleestoque.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
 import com.gestaobusiness.controleestoque.dtos.ProdutoDTO;
 import com.gestaobusiness.controleestoque.dtos.VendaDTO;
 import com.gestaobusiness.controleestoque.dtos.VendaRequestDTO;
 import com.gestaobusiness.controleestoque.mapper.ProdutoMapper;
 import com.gestaobusiness.controleestoque.models.Cliente;
-import com.gestaobusiness.controleestoque.models.Estoque;
 import com.gestaobusiness.controleestoque.models.ItemVenda;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.models.Venda;
 import com.gestaobusiness.controleestoque.repository.ClienteRepository;
 import com.gestaobusiness.controleestoque.repository.ItemVendaRepository;
-import com.gestaobusiness.controleestoque.repository.ProdutoRepository;
 import com.gestaobusiness.controleestoque.repository.VendaRepository;
 import com.gestaobusiness.controleestoque.services.exceptions.EstoqueInsuficienteException;
 
@@ -30,8 +27,8 @@ import jakarta.transaction.Transactional;
 @Service
 public class VendaService {
 
-    @Autowired
-    ProdutoRepository produtoRepository;
+    // @Autowired
+    // ProdutoRepository produtoRepository;
     @Autowired
     VendaRepository vendaRepository;
     @Autowired
@@ -40,61 +37,66 @@ public class VendaService {
     ClienteRepository clienteRepository;
 
     @Autowired
-    EstoqueService estoqueService;
+    ProdutoService produtoService;
 
     public List<Venda> obterVendas() {
-        return vendaRepository.findAll(Sort.by(Sort.Order.asc("id")));
+        return vendaRepository.findAll();
+        // return vendaRepository.findAll(Sort.by(Sort.Order.asc("id")));
     }
 
     public List<ItemVenda> obterVendas(Long idVenda) {
         return itemVendaRepository.findAllByVendaId(idVenda);
     }
 
-    public Venda obterVenda(Long idVenda) {
-        return vendaRepository.findById(idVenda)
-                .orElseThrow(() -> new NoSuchElementException("Venda não encontrada com o ID: " + idVenda));
-    }
-
     public HttpStatus salvarVenda(VendaRequestDTO venda) {
         Cliente cliente;
-        final boolean validation = true;
         if (venda.getCliente() != null) {
             cliente = clienteRepository.findById(venda.getCliente().getId()).get();
-            System.out.println(cliente.getNome());
         } else {
             cliente = null;
         }
 
-        venda.getProdutos().forEach(produto -> {
-            Produto p = estoqueService.findProdutoByCodBarras(produto.getCodbarras());
-            Estoque estoqueProduto = estoqueService.obterEstoqueByProdutoId(p.getId());
-            if (estoqueProduto.getQuantidade() < produto.getQuantidade()) {
-                validation = false;
+        venda.getProdutos().forEach(produtoVenda -> {
+            System.out.println(produtoVenda.getCodBarras());
+            Produto produto = produtoService.obterProdutoByCodBarras(produtoVenda.getCodBarras());
+            if (produto == null) {
+                throw new RuntimeException("Produto não encontrado");
+            }
+            if (produto.getQuantidadeEstoque() < produtoVenda.getQuantidade()) {
+                throw new EstoqueInsuficienteException(produto.getNome(), produto.getQuantidadeEstoque(),
+                        produtoVenda.getQuantidade());
             }
         });
 
+        Venda vendaNova = new Venda();
+        vendaNova.setCliente(cliente);
+        vendaNova.setDataVenda(LocalDateTime.now());
+        vendaNova.setMetodoPagamento(venda.getMetodoPagamento());
+        vendaNova.setStatusVenda(venda.getStatusVenda());
+        vendaNova.setTotalVenda(0.0);
+        vendaNova.setProdutos(new ArrayList<>());
+        final Venda vendaNovaFinal = vendaRepository.save(vendaNova);
         venda.getProdutos().forEach(produto -> {
-            Produto produtoVenda = estoqueService.findProdutoByCodBarras(produto.getCodbarras());
-            HttpStatus statusTransacao;
+            Produto produtoVenda = produtoService.obterProdutoByCodBarras(produto.getCodBarras());
             if (produtoVenda != null) {
                 if (produto.getQuantidade() > 0) {
-                    Venda vendaNova = new Venda();
-                    vendaNova.setCliente(cliente);
-                    vendaNova.setDataVenda(LocalDateTime.now());
-                    vendaNova.setMetodoPagamento(venda.getMetodoPagamento());
-                    vendaNova.setStatusVenda(venda.getStatusVenda());
-                    vendaNova.setTotalVenda(venda.getTotalVenda());
-                    vendaNova = vendaRepository.save(vendaNova);
                     ItemVenda itemVenda = new ItemVenda();
                     itemVenda.setProduto(produtoVenda);
                     itemVenda.setQuantidade(produto.getQuantidade());
                     itemVenda.setSubtotal(produto.getQuantidade() * produtoVenda.getPreco());
-                    itemVenda.setVenda(vendaNova);
+                    itemVenda.setVenda(vendaNovaFinal);
                     itemVendaRepository.save(itemVenda);
-                    estoqueService.diminuirEstoque(produtoVenda.getId(), produto.getQuantidade());
+                    produtoService.diminuirEstoque(
+                            new AdicionarEstoqueProduto(produto.getCodBarras(), produto.getQuantidade()));
+                    vendaNovaFinal.setTotalVenda(vendaNovaFinal.getTotalVenda() +
+                            itemVenda.getSubTotal());
+                    vendaNovaFinal.getProdutos().add(produtoVenda);
+                    vendaNovaFinal.setProdutos(vendaNovaFinal.getProdutos());
+                    vendaRepository.save(vendaNovaFinal);
                 }
             }
         });
+
         return HttpStatus.CREATED;
     }
 
@@ -113,7 +115,7 @@ public class VendaService {
             venda.setStatusVenda(itemVenda.getVenda().getStatusVenda());
             venda.setMetodoPagamento(itemVenda.getVenda().getMetodoPagamento());
             venda.setDataVenda(itemVenda.getVenda().getDataVenda());
-            totalVenda += itemVenda.getSubtotal();
+            totalVenda += itemVenda.getSubTotal();
             ProdutoDTO produtoDTO = ProdutoMapper.toDTO(itemVenda.getProduto(), itemVenda.getQuantidade());
             produtos.add(produtoDTO);
         }

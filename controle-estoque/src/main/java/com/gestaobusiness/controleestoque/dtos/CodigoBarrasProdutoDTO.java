@@ -9,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class CodigoBarrasProdutoDTO {
     private String codBarras;
-    private Long produtoID;
+    private Long produtId;
 }

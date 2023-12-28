@@ -27,7 +27,7 @@ public class VendaRequestDTO {
 
     private EMetodoPagamento metodoPagamento;
 
-    private List<CodigoBarrasProdutoRequestDTO> produtos;
+    private List<AdicionarEstoqueProduto> produtos;
 
     public Double getTotalVenda() {
         if (this.totalVenda == null) {

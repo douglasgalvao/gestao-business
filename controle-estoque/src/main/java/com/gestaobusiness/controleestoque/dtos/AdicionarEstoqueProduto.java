@@ -1,13 +1,15 @@
 package com.gestaobusiness.controleestoque.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class CodigoBarrasProdutoRequestDTO {
-    private String codbarras;
+public class AdicionarEstoqueProduto {
+    private String codBarras;
     private Integer quantidade;
 }

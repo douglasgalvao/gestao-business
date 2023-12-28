@@ -1,5 +1,7 @@
 package com.gestaobusiness.controleestoque.dtos;
 
+import java.text.DecimalFormat;
+
 import com.gestaobusiness.controleestoque.models.Categoria;
 
 import lombok.Getter;
@@ -24,5 +26,12 @@ public class ProdutoDTO {
     private Double subtotal;
 
     private Categoria categoriaProduto;
+
+    public double getSubTotal() {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String formattedTotal = df.format(subtotal);
+        this.subtotal = Double.parseDouble(formattedTotal.replace(",", "."));
+        return this.subtotal;
+    }
 
 }

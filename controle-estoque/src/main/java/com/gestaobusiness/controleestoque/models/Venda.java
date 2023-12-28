@@ -1,8 +1,9 @@
 package com.gestaobusiness.controleestoque.models;
 
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.context.annotation.DependsOn;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestaobusiness.controleestoque.enums.EMetodoPagamento;
@@ -18,13 +19,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@DependsOn("Produto")
 public class Venda {
 
-    public static final String TABLE_NAME = "Vendas";
+    public static final String TABLE_NAME = "Venda";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "venda_id", unique = true)
+    @Column(name = "id", unique = true)
     private Long id;
 
     private Double totalVenda;
@@ -40,17 +42,7 @@ public class Venda {
     private Cliente cliente;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "venda_produto", joinColumns = @JoinColumn(name = "venda_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produtos;
-    
 
-    public Double getTotalVenda() {
-        if (this.totalVenda == null) {
-            return null;
-        }
-
-        DecimalFormat df = new DecimalFormat("#0.00");
-        String formattedTotal = df.format(totalVenda);
-        this.totalVenda = Double.parseDouble(formattedTotal.replace(",", "."));
-        return this.totalVenda;
-    }
 }

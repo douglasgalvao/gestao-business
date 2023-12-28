@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -27,12 +26,18 @@ public class Produto {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "produto_nome")
+    @Column(unique = true, name = "cod_barras")
+    private String codBarras;
+
+    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "produto_preco")
+    @Column(name = "preco")
     private Double preco;
 
+    @Column(name = "estoque", columnDefinition = "integer default 0")
+    Integer quantidadeEstoque;
+    
     @ManyToOne(cascade = CascadeType.MERGE)
     private Categoria categoriaProduto;
 
