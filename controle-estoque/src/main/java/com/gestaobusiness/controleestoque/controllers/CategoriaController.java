@@ -42,7 +42,6 @@ public class CategoriaController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<HttpStatus> salvarCategoria(@RequestBody Categoria categoria) {
-        System.out.println(categoria.getNome());
         return ResponseEntity.status(201).body(categoriaService.salvarCategoria(categoria));
     };
 

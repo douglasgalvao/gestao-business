@@ -1,7 +1,5 @@
 package com.gestaobusiness.controleestoque.services;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -13,17 +11,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.BufferingClientHttpRequestFactory;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
 import com.gestaobusiness.controleestoque.dtos.ProdutoFileResponseDTO;
-import com.gestaobusiness.controleestoque.dtos.ProdutoRequestDTO;
 import com.gestaobusiness.controleestoque.models.Categoria;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.repository.CategoriaRepository;
@@ -64,10 +59,10 @@ public class ProdutoService {
     }
 
     public HttpStatus salvarProduto(Produto produto) {
+
         if (produto.getQuantidadeEstoque() == null) {
             produto.setQuantidadeEstoque(0);
         }
-        System.out.println(produto.getImg());
         produtoRepository.save(produto);
         return HttpStatus.CREATED;
     }
@@ -94,33 +89,38 @@ public class ProdutoService {
         return HttpStatus.OK;
     }
 
+    public ProdutoFileResponseDTO uploadImagem(MultipartFile file) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        HttpHeaders headers = new HttpHeaders();
+
+        // ContentType
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
+        multipartBodyBuilder.part("file", file.getResource());
+        multipartBodyBuilder.part("UPLOADCARE_PUB_KEY", "fb4b6a885814a953c3d7");
+        multipartBodyBuilder.part("UPLOADCARE_STORE", "auto");
+
+        MultiValueMap<String, HttpEntity<?>> multipartBody = multipartBodyBuilder.build();
+
+        // The complete http request body.
+        HttpEntity<MultiValueMap<String, HttpEntity<?>>> httpEntity = new HttpEntity<>(multipartBody, headers);
+
+        ResponseEntity<ProdutoFileResponseDTO> response = restTemplate.postForEntity(
+                "https://upload.uploadcare.com/base/?jsonerrors=1", httpEntity,
+                ProdutoFileResponseDTO.class);
+
+        if (response.getBody().getFile() == null) {
+            ProdutoFileResponseDTO p = new ProdutoFileResponseDTO();
+            p.setFile("null");
+            return p;
+        }
+
+        return response.getBody();
+
+    }
+
 }
-
-// public HttpStatus uploadImagem(MultipartFile file) {
-// RestTemplate restTemplate = new RestTemplate();
-
-// System.out.println(file);
-// // Criar headers
-// HttpHeaders headers = new HttpHeaders();
-// headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-// // Criar o corpo da solicitação
-// MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-// body.add("file", file);
-// body.add("UPLOADCARE_PUB_KEY", "fb4b6a885814a953c3d7");
-// body.add("UPLOADCARE_STORE", "auto");
-// body.add("source", "local");
-// String urlEndpoint = "https://upload.uploadcare.com/base/?jsonerrors=1";
-
-// // Criar a solicitação
-// HttpEntity<MultiValueMap<String, Object>> requestEntity = new
-// HttpEntity<>(body, headers);
-
-// // Enviar a solicitação
-// ResponseEntity<ProdutoFileResponseDTO> response =
-// restTemplate.postForEntity(urlEndpoint, requestEntity,
-// ProdutoFileResponseDTO.class);
-// // System.out.println(response.getBody());
-// return HttpStatus.OK;
-
-// }

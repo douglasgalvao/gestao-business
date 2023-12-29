@@ -57,7 +57,6 @@ public class VendaService {
         }
 
         venda.getProdutos().forEach(produtoVenda -> {
-            System.out.println(produtoVenda.getCodBarras());
             Produto produto = produtoService.obterProdutoByCodBarras(produtoVenda.getCodBarras());
             if (produto == null) {
                 throw new RuntimeException("Produto não encontrado");

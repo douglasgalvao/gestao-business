@@ -41,6 +41,9 @@ public class Produto {
     @Column(name = "estoque", columnDefinition = "integer default 0")
     Integer quantidadeEstoque;
 
+    @Column(name = "estoque_minimo", columnDefinition = "integer default 10")
+    Integer quantidadeMinimaEstoque;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private Categoria categoriaProduto;
 

@@ -53,10 +53,10 @@ public class ProdutoController {
         return ResponseEntity.status(201).body(produtoService.adicionarEstoque(codBarrasEQuantidade));
     };
 
-    // @PostMapping(value = "/upload")
-    // public ResponseEntity<HttpStatus> uploadImagem(@RequestParam("img") MultipartFile file) {
-    //     return ResponseEntity.status(201).body(produtoService.uploadImagem(file));
-    // };
+    @PostMapping(value = "/upload")
+    public ResponseEntity<ProdutoFileResponseDTO> uploadImagem(@RequestParam("img") MultipartFile file) {
+        return ResponseEntity.status(201).body(produtoService.uploadImagem(file));
+    };
 
     @PostMapping
     @ResponseBody
