@@ -35,9 +35,12 @@ public class Produto {
     @Column(name = "preco")
     private Double preco;
 
+    @Column(name = "img")
+    private String img;
+
     @Column(name = "estoque", columnDefinition = "integer default 0")
     Integer quantidadeEstoque;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE)
     private Categoria categoriaProduto;
 

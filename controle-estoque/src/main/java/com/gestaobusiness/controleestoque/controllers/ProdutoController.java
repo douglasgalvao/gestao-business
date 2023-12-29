@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
+import com.gestaobusiness.controleestoque.dtos.ProdutoFileResponseDTO;
+import com.gestaobusiness.controleestoque.dtos.ProdutoRequestDTO;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.services.ProdutoService;
 
@@ -40,7 +43,6 @@ public class ProdutoController {
         return ResponseEntity.ok().body(produtoService.obterProdutoByNome(nome));
     };
 
-
     @GetMapping(value = "/cod/{codBarras}")
     public ResponseEntity<?> obterProdutoByCodBarras(@PathVariable String codBarras) {
         return ResponseEntity.ok().body(produtoService.obterProdutoByCodBarras(codBarras));
@@ -50,6 +52,11 @@ public class ProdutoController {
     public ResponseEntity<HttpStatus> adicionarEstoque(@RequestBody AdicionarEstoqueProduto codBarrasEQuantidade) {
         return ResponseEntity.status(201).body(produtoService.adicionarEstoque(codBarrasEQuantidade));
     };
+
+    // @PostMapping(value = "/upload")
+    // public ResponseEntity<HttpStatus> uploadImagem(@RequestParam("img") MultipartFile file) {
+    //     return ResponseEntity.status(201).body(produtoService.uploadImagem(file));
+    // };
 
     @PostMapping
     @ResponseBody

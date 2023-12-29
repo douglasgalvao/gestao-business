@@ -1,5 +1,6 @@
 package com.gestaobusiness.controleestoque.dtos;
 
+import java.io.File;
 import java.text.DecimalFormat;
 
 import com.gestaobusiness.controleestoque.models.Categoria;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProdutoDTO {
+public class ProdutoRequestDTO {
 
     private Long id;
 
