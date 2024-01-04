@@ -2,6 +2,8 @@ package com.gestaobusiness.controleestoque.services;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,7 @@ public class ProdutoService {
     CategoriaRepository categoriaRepository;
 
     public HttpStatus criarCategoria(Categoria categoria) {
+        categoria.setNome(categoria.getNome().toUpperCase());
         categoriaRepository.save(categoria);
         return HttpStatus.CREATED;
     }
@@ -42,7 +45,7 @@ public class ProdutoService {
     }
 
     public List<Produto> obterProdutos() {
-        return produtoRepository.findAll();
+        return produtoRepository.findAll().stream().filter(produto -> produto.isDeletado() == false).toList();
     }
 
     public Produto obterProduto(Long idProduto) {
@@ -59,9 +62,14 @@ public class ProdutoService {
     }
 
     public HttpStatus salvarProduto(Produto produto) {
-
         if (produto.getQuantidadeEstoque() == null) {
             produto.setQuantidadeEstoque(0);
+        } else {
+            if (produto.getQuantidadeEstoque() < 0) {
+                throw new RuntimeException("Quantidade não pode ser negativa");
+            } else {
+                produto.setQuantidadeEstoque(produto.getQuantidadeEstoque());
+            }
         }
         produtoRepository.save(produto);
         return HttpStatus.CREATED;
@@ -85,7 +93,9 @@ public class ProdutoService {
     }
 
     public HttpStatus deletarProduto(Long idProduto) {
-        produtoRepository.deleteById(idProduto);
+        Produto produto = produtoRepository.findById(idProduto)
+                .orElseThrow(() -> new NoSuchElementException("Produto não encontrado com o ID: " + idProduto));
+        produto.setDeletado(true);
         return HttpStatus.OK;
     }
 
