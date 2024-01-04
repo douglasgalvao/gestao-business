@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
 import com.gestaobusiness.controleestoque.dtos.ProdutoFileResponseDTO;
-import com.gestaobusiness.controleestoque.dtos.ProdutoRequestDTO;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.services.ProdutoService;
 
