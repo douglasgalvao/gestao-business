@@ -27,7 +27,7 @@ public class ProdutoDTO {
 
     private Double subtotal;
 
-    private Categoria categoriaProduto;
+    private Categoria categoria_Produto;
 
     public double getSubTotal() {
         DecimalFormat df = new DecimalFormat("#0.00");
