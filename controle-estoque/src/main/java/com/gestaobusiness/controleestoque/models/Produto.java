@@ -44,7 +44,10 @@ public class Produto {
     @Column(name = "estoque_minimo", columnDefinition = "integer default 10")
     Integer quantidadeMinimaEstoque;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    private Categoria categoriaProduto;
+    @Column(name = "deletado", columnDefinition = "boolean default false")
+    private boolean deletado;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Categoria categoria_Produto;
 
 }
