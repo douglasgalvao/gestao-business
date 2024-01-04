@@ -7,7 +7,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gestaobusiness.controleestoque.enums.EMetodoPagamento;
 import com.gestaobusiness.controleestoque.enums.EStatusVenda;
-import com.gestaobusiness.controleestoque.models.Categoria;
 import com.gestaobusiness.controleestoque.models.Cliente;
 
 import lombok.Getter;

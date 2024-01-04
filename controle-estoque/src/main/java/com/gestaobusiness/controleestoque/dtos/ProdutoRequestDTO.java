@@ -1,6 +1,5 @@
 package com.gestaobusiness.controleestoque.dtos;
 
-import java.io.File;
 import java.text.DecimalFormat;
 
 import com.gestaobusiness.controleestoque.models.Categoria;
@@ -28,7 +27,7 @@ public class ProdutoRequestDTO {
 
     private Double subtotal;
 
-    private Categoria categoriaProduto;
+    private Categoria categoria_Produto;
 
     public double getSubTotal() {
         DecimalFormat df = new DecimalFormat("#0.00");
