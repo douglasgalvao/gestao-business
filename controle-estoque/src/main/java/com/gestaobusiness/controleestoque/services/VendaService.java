@@ -1,6 +1,8 @@
 package com.gestaobusiness.controleestoque.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,4 +133,14 @@ public class VendaService {
         return HttpStatus.OK;
     }
 
+    public List<Venda> filtrarVendas(String startDate, String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        LocalDate localStartDate = LocalDate.parse(startDate, formatter);
+        LocalDate localEndDate = LocalDate.parse(endDate, formatter).plusDays(1);
+        LocalDateTime startOfDay = localStartDate.atStartOfDay();
+        LocalDateTime endOfDay = localEndDate.atStartOfDay().minusNanos(1);
+        List<Venda> vendas = vendaRepository.findAllByDataVendaBetween(startOfDay, endOfDay);
+
+        return vendas;
+    }
 }

@@ -7,12 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = Categoria.TABLE_NAME)
 @NoArgsConstructor
 @Getter
+@Setter
 public class Categoria {
 
     public static final String TABLE_NAME = "Categoria";

@@ -24,7 +24,7 @@ public class ProdutoMapper {
         produtoDTO.setNome(produto.getNome());
         produtoDTO.setImg(produto.getImg());
         produtoDTO.setQuantidade(quantidade);
-        produtoDTO.setCategoriaProduto(produto.getCategoriaProduto());
+        produtoDTO.setCategoria_Produto(produto.getCategoria_Produto());
         produtoDTO.setPreco(produto.getPreco());
         produtoDTO.setSubtotal(produto.getPreco() * quantidade);
         return produtoDTO;

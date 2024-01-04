@@ -32,17 +32,20 @@ public class CategoriaService {
     }
 
     public Categoria obterCategoria(String nomeCategoria) {
-        return categoriaRepository.findByNome(nomeCategoria);
+
+        return categoriaRepository.findByNome(nomeCategoria.toUpperCase());
     }
 
     @Transactional
     public HttpStatus salvarCategoria(Categoria categoria) {
+        categoria.setNome(categoria.getNome().toUpperCase());
         categoria = entityManager.merge(categoria);
         categoriaRepository.save(categoria);
         return HttpStatus.CREATED;
     }
 
     public HttpStatus atualizarCategoria(Categoria categoria) {
+        categoria.setNome(categoria.getNome().toUpperCase());
         categoriaRepository.save(categoria);
         return HttpStatus.OK;
     }
