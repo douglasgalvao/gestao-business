@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
+import com.gestaobusiness.controleestoque.dtos.ProdutoAPI_DTO;
 import com.gestaobusiness.controleestoque.dtos.ProdutoFileResponseDTO;
 import com.gestaobusiness.controleestoque.models.Produto;
 import com.gestaobusiness.controleestoque.services.ProdutoService;
@@ -68,4 +69,11 @@ public class ProdutoController {
         produtoService.deletarProduto(id);
         return ResponseEntity.ok().build();
     };
+
+
+    // @GetMapping(value = "/find/{codBarras}")
+    // public ResponseEntity<ProdutoAPI_DTO> getProdutoAPIByCode(@PathVariable String codBarras) {
+    //     return ResponseEntity.ok().body(produtoService.getProdutoAPIByCode(codBarras));
+    // };
+
 }
