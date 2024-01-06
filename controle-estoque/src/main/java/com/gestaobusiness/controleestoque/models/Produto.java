@@ -47,7 +47,7 @@ public class Produto {
     @Column(name = "deletado", columnDefinition = "boolean default false")
     private boolean deletado;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Categoria categoria_Produto;
 
 }
