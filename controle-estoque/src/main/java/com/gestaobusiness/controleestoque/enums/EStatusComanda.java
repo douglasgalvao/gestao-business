@@ -1,8 +1,9 @@
 package com.gestaobusiness.controleestoque.enums;
 
 public enum EStatusComanda {
-    PAGO("pago"),
-    PENDENTE("pendente");
+    PAGO("PAGO"),
+    PARCIALMENTE_PAGO("PARCIALMENTE PAGO"),
+    PENDENTE("PENDENTE");
 
     private final String statuscomanda;
 
