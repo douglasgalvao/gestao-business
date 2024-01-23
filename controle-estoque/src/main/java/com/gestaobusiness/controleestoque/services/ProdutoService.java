@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
 import com.gestaobusiness.controleestoque.dtos.AdicionarEstoqueProduto;
-import com.gestaobusiness.controleestoque.dtos.ProdutoAPI_DTO;
 import com.gestaobusiness.controleestoque.dtos.ProdutoFileResponseDTO;
 import com.gestaobusiness.controleestoque.models.Categoria;
 import com.gestaobusiness.controleestoque.models.Produto;
@@ -96,7 +94,10 @@ public class ProdutoService {
     public HttpStatus deletarProduto(Long idProduto) {
         Produto produto = produtoRepository.findById(idProduto)
                 .orElseThrow(() -> new NoSuchElementException("Produto não encontrado com o ID: " + idProduto));
-                produtoRepository.delete(produto);
+
+        produto.setDeletado(true);
+        produtoRepository.save(produto);
+        // produtoRepository.delete(produto);
         return HttpStatus.OK;
     }
 
@@ -135,16 +136,16 @@ public class ProdutoService {
     }
 
     // public ProdutoAPI_DTO getProdutoAPIByCode(String codBarras) {
-    //     RestTemplate restTemplate = new RestTemplate();
-    //     restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
-    //     restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-    //     HttpHeaders headers = new HttpHeaders();
-    //     headers.set("X-Cosmos-Token", "P2qVH-P09gzMCOA-sOGV8Q");
-    //     HttpEntity<String> entity = new HttpEntity<>(headers);
-    //     ResponseEntity<ProdutoAPI_DTO> response = restTemplate.exchange(
-    //             "https://api.cosmos.bluesoft.com.br/gtins/" + codBarras.trim(),
-    //             HttpMethod.GET, entity, ProdutoAPI_DTO.class);
-    //     return response.getBody();
+    // RestTemplate restTemplate = new RestTemplate();
+    // restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+    // restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+    // HttpHeaders headers = new HttpHeaders();
+    // headers.set("X-Cosmos-Token", "P2qVH-P09gzMCOA-sOGV8Q");
+    // HttpEntity<String> entity = new HttpEntity<>(headers);
+    // ResponseEntity<ProdutoAPI_DTO> response = restTemplate.exchange(
+    // "https://api.cosmos.bluesoft.com.br/gtins/" + codBarras.trim(),
+    // HttpMethod.GET, entity, ProdutoAPI_DTO.class);
+    // return response.getBody();
     // }
 
 }

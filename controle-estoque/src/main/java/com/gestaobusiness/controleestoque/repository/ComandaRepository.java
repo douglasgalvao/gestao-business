@@ -1,8 +1,8 @@
-// package com.gestaobusiness.controleestoque.repository;
+package com.gestaobusiness.controleestoque.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// import com.gestaobusiness.controleestoque.models.Comanda;
+import com.gestaobusiness.controleestoque.models.Comanda;
 
-// public interface ComandaRepository extends JpaRepository<Comanda, Long> {
-// }
+public interface ComandaRepository extends JpaRepository<Comanda, Long> {
+}
